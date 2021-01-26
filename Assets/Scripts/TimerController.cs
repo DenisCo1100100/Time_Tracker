@@ -18,12 +18,18 @@ public class TimerController : MonoBehaviour
         timeCounter = gameObject.transform.Find("TimerText").GetComponent<Text>();
         timeCounter.text = "00:00:00";
         timerGoing = false;
+
+        UIControllerScript.AllTimers.Add(this);
     }
 
     public void BeginTimer()
     {
+        foreach (TimerController timer in UIControllerScript.AllTimers)
+        {
+            timer.EndTimer();
+        }
+
         timerGoing = true;
-        elapsedTime = 0f;
 
         StartCoroutine(UpdateTimer());
     }
@@ -32,13 +38,11 @@ public class TimerController : MonoBehaviour
     {
         if(timerGoing == false)
         {
-            timerGoing = true;
-
-            StartCoroutine(UpdateTimer());
+            BeginTimer();
         }
         else
         {
-            timerGoing = false;
+            EndTimer();
         }
     }
 
