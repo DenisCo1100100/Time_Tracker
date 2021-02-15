@@ -6,20 +6,29 @@ using UnityEngine.UI;
 
 public class TimerController : MonoBehaviour
 {
-    private Text timeCounter;
+    private Text _timeCounter;
 
-    private TimeSpan timePlaying;
-    private bool timerGoing;
+    private TimeSpan _timePlaying;
+    private bool _timerGoing;
 
-    private float elapsedTime;
+    private float _elapsedTime;
+    
+    private DateTime _stopPointTime;
+    private DateTime _starPointTime;
+
+    private Image playStopImage;
 
     private void Start()
     {
-        timeCounter = gameObject.transform.Find("TimerText").GetComponent<Text>();
-        timeCounter.text = "00:00:00";
-        timerGoing = false;
+        _timeCounter = gameObject.transform.Find("TimerText").GetComponent<Text>();
+        _timeCounter.text = "00:00:00";
+        _timerGoing = false;
+
+        Application.runInBackground = true;
 
         UIControllerScript.AllTimers.Add(this);
+
+        playStopImage = gameObject.transform.Find("PlayStopImage").GetComponent<Image>();
     }
 
     public void BeginTimer()
@@ -29,14 +38,15 @@ public class TimerController : MonoBehaviour
             timer.EndTimer();
         }
 
-        timerGoing = true;
+        _timerGoing = true;
 
         StartCoroutine(UpdateTimer());
+        playStopImage.sprite = Resources.Load<Sprite>("Stop");
     }
 
     public void StartStopTimer()
     {
-        if(timerGoing == false)
+        if(_timerGoing == false)
         {
             BeginTimer();
         }
@@ -48,19 +58,40 @@ public class TimerController : MonoBehaviour
 
     public void EndTimer()
     {
-        timerGoing = false;
+        _timerGoing = false;
+
+        playStopImage.sprite = Resources.Load<Sprite>("Play");
     }
 
     private IEnumerator UpdateTimer()
     {
-        while (timerGoing)
+        while (_timerGoing)
         {
-            elapsedTime += Time.deltaTime;
-            timePlaying = TimeSpan.FromSeconds(elapsedTime);
-            string timePlayingStr = "" + timePlaying.ToString("hh':'mm':'ss");
-            timeCounter.text = timePlayingStr;
+            _elapsedTime += Time.deltaTime;
+            _timePlaying = TimeSpan.FromSeconds(_elapsedTime);
+            string timePlayingStr = "" + _timePlaying.ToString("hh':'mm':'ss");
+            _timeCounter.text = timePlayingStr;
 
             yield return null;
+        }
+    }
+
+    private void OnDisable()
+    {
+        if (_timerGoing == true)
+        {
+            _stopPointTime = DateTime.Now;
+        }
+    }
+
+    private void OnEnable()
+    {
+        if (_timerGoing == true)
+        {
+            _starPointTime = DateTime.Now;
+            _elapsedTime += (_starPointTime - _stopPointTime).Seconds;
+
+            BeginTimer();
         }
     }
 }

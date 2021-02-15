@@ -624,4 +624,4 @@ ScriptsOnlyBuild:
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: D:/Complited Aplications/BetaTimerTrack/TimeTrak_2.0.apk
+  playerPath: D:/Completed Applications/BetaTimerTrack/TimeTrack3.0.apk

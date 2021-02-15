@@ -4,6 +4,7 @@ using UnityEngine;
 public class UIControllerScript : MonoBehaviour
 {
     [SerializeField] private List<UIMenuPanel> _allMenuPanels;
+
     public static List<TimerController> AllTimers;
     public static UIControllerScript UIController;
 
@@ -11,11 +12,6 @@ public class UIControllerScript : MonoBehaviour
     {
         UIController = this;
         AllTimers = new List<TimerController>();
-    }
-
-    private void OnApplicationPause(bool pause)
-    {
-        
     }
 
     public void ActivateSelectPanel(GameObject selectButton)

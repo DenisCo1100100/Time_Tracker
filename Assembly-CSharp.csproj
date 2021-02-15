@@ -67,6 +67,9 @@
     <Compile Include="Assets\Scripts\AddingTimersScript.cs" />
     <Compile Include="Assets\Scripts\ClickButtonEventScript.cs" />
     <Compile Include="Assets\Scripts\Data storage\DataController.cs" />
+    <Compile Include="Assets\Scripts\Notifications\LocalNotification.cs" />
+    <Compile Include="Assets\Scripts\Notifications\NotificationTest.cs" />
+    <Compile Include="Assets\Scripts\SelectLogo.cs" />
     <Compile Include="Assets\Scripts\TimerController.cs" />
     <Compile Include="Assets\Scripts\UIControllerScript.cs" />
     <Compile Include="Assets\Scripts\UIMenuPanel.cs" />

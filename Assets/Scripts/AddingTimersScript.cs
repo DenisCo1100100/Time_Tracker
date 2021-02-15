@@ -1,18 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class AddingTimersScript : MonoBehaviour
 {
-    [SerializeField] private GameObject TimerPrefab;
-    [SerializeField] private InputField inputTimerNameText;
-    [SerializeField] private GameObject content;
+    [SerializeField] private GameObject _timerPrefab;
+    [SerializeField] private InputField _inputTimerNameText;
+    [SerializeField] private GameObject _content;
 
     public void AddTimer()
     {
-        var newtimer = Instantiate(TimerPrefab);
-        newtimer.transform.SetParent(content.transform);
-        newtimer.transform.Find("TimerNameText").GetComponent<Text>().text = inputTimerNameText.text;
+        var newtimer = Instantiate(_timerPrefab);
+        newtimer.transform.SetParent(_content.transform);
+        newtimer.transform.Find("TimerNameText").GetComponent<Text>().text = _inputTimerNameText.text;
+        newtimer.transform.Find("LogoImage").GetComponent<Image>().sprite = SelectLogo.selectLogo.IconSprite;
+    }
+
+    public void DefaultState()
+    {
+        _inputTimerNameText.text = "";
+        SelectLogo.selectLogo.DefaultState();
     }
 }
